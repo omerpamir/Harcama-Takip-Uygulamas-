@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Expense Calculator</string>
+    <string name="title_activity_home">Expense Calculator</string>
+    <string name="label_amount">Amount (€)</string>
+    <string name="label_description">Description</string>
+    <string name="label_type_of_expense">Type of Expense</string>
+    <string name="non_regular">Non-Regular</string>
+    <string name="regular">Regular</string>
+    <string name="label_date">Date</string>
+    <string name="label_add">Add</string>
+    <string name="label_update">Update</string>
+    <string name="empty_sheet_info">You don\'t have any sheets \nClick + button to add new sheet</string>
+    <string name="label_total">Total</string>
+    <string name="empty_expense_info">No expense recorded for this month \nClick + button to add an expense</string>
+    <string name="label_choose_month">Choose Month</string>
+    <string name="label_choose_year">Choose Year</string>
+    <string name="label_income">Income (€)</string>
+    <string name="label_edit">Edit</string>
+    <string name="label_delete">Delete</string>
+
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+</resources>

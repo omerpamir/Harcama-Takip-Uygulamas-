@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".view.HomeActivity"
+    tools:showIn="@layout/activity_home">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_overall_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/padd_default">
+
+            <TextView
+                android:id="@+id/tv_overall_surplus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="26sp"
+                tools:text="9999" />
+
+            <TextView
+                android:id="@+id/tv_label_surplus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Surplus" />
+
+            <TextView
+                android:id="@+id/tv_overall_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="12sp"
+                tools:text="Total Income: 99999999" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv_empty_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="@string/empty_sheet_info"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@+id/listview_annual"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/cv_overall_info"
+        android:divider="@color/colorDivider"
+        android:dividerHeight="1dp"
+        tools:listitem="@layout/row_list_item_sheet" />
+
+</RelativeLayout>

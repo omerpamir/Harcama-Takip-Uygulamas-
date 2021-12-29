@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#16a085</color>
+    <color name="colorPrimaryDark">#2c3e50</color>
+    <color name="colorAccent">#f1c40f</color>
+
+    <color name="colorAccentSecondary">#f57f17</color>
+
+    <color name="colorWhite">#ededed</color>
+    <color name="colorBlack">#0e0e0e</color>
+
+    <color name="colorDivider">#dedede</color>
+
+    <color name="colorRegular">#64b5f6</color>
+    <color name="colorNonRegular">#01579b</color>
+
+    <color name="colorSurplus">#8bc34a</color>
+    <color name="colorDeficit">#d84315</color>
+
+</resources>
