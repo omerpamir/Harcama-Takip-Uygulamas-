@@ -14,13 +14,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="@string/label_choose_month" />
+            android:text="@string/label_seç_ay" />
 
         <Spinner
-            android:id="@+id/spinner_months"
+            android:id="@+id/spinner_aylar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/months"
+            android:entries="@array/aylar"
             android:paddingVertical="10dp" />
 
         <TextView
@@ -28,10 +28,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
-            android:text="@string/label_choose_year" />
+            android:text="@string/label_seç_yıl" />
 
         <Spinner
-            android:id="@+id/spinner_years"
+            android:id="@+id/spinner_yıllar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="5dp" />
@@ -41,10 +41,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:text="@string/label_income" />
+            android:text="@string/label_gelir" />
 
         <EditText
-            android:id="@+id/et_income"
+            android:id="@+id/et_gelir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -53,10 +53,10 @@
             android:maxLength="20" />
 
         <Button
-            android:id="@+id/btn_add"
+            android:id="@+id/btn_ekle"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/label_add" />
+            android:text="@string/label_ekle" />
     </LinearLayout>
 </ScrollView>

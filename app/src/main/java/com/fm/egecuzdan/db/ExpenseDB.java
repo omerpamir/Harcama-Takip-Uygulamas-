@@ -1,15 +1,14 @@
-package com.fm.expensecalculator.db;
+package com.fm.egecuzdan.db;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
-import com.fm.expensecalculator.R;
-import com.fm.expensecalculator.db.models.ExpenseModel;
-import com.fm.expensecalculator.db.models.SheetModel;
+import com.fm.egecuzdan.R;
+import com.fm.egecuzdan.db.models.ExpenseModel;
+import com.fm.egecuzdan.db.models.SheetModel;
 
 import java.util.ArrayList;
 
@@ -253,7 +252,7 @@ public class ExpenseDB extends SQLiteOpenHelper {
 
     //returns month name to corresponding month number
     private String getMonthName(String month) {
-        String[] months = context.getResources().getStringArray(R.array.months);
+        String[] months = context.getResources().getStringArray(R.array.aylar);
         return months[Integer.parseInt(month)];
     }
 }

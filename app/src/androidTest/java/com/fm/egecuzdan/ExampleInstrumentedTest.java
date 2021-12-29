@@ -1,4 +1,4 @@
-package com.fm.expensecalculator;
+package com.fm.egecuzdan;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

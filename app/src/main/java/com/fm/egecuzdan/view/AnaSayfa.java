@@ -1,4 +1,4 @@
-package com.fm.expensecalculator.view;
+package com.fm.egecuzdan.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,41 +18,41 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fm.expensecalculator.R;
-import com.fm.expensecalculator.adapters.MonthlyListAdapter;
-import com.fm.expensecalculator.db.ExpenseDB;
-import com.fm.expensecalculator.db.models.SheetModel;
-import com.fm.expensecalculator.utils.AppConstants;
+import com.fm.egecuzdan.R;
+import com.fm.egecuzdan.adapters.MonthlyListAdapter;
+import com.fm.egecuzdan.db.ExpenseDB;
+import com.fm.egecuzdan.db.models.SheetModel;
+import com.fm.egecuzdan.utils.AppConstants;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import static com.fm.expensecalculator.utils.AppConstants.SELECTED_MONTH_ID;
+import static com.fm.egecuzdan.utils.AppConstants.SELECTED_MONTH_ID;
 
-public class HomeActivity extends AppCompatActivity {
+public class AnaSayfa extends AppCompatActivity {
 
     private ListView listView_annual;
     private MonthlyListAdapter adapter;
-    private TextView tv_empty_info;
-    private TextView tv_overall_surplus;
-    private CardView cv_overall_info;
-    private TextView tv_overall_income;
-    private TextView tv_label_surplus;
+    private TextView tv_null;
+    private TextView tv_ort_artan;
+    private CardView cv_genel_bilgi;
+    private TextView tv_ort_gelir;
+    private TextView tv_genel_kalan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.ana_sayfa);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        listView_annual = (ListView) findViewById(R.id.listview_annual);
-        tv_empty_info = (TextView) findViewById(R.id.tv_empty_info);
-        tv_overall_surplus = (TextView) findViewById(R.id.tv_overall_surplus);
-        tv_overall_income = (TextView) findViewById(R.id.tv_overall_income);
-        tv_label_surplus = (TextView) findViewById(R.id.tv_label_surplus);
-        cv_overall_info = (CardView) findViewById(R.id.cv_overall_info);
+        listView_annual = (ListView) findViewById(R.id.listview_yıllık);
+        tv_null = (TextView) findViewById(R.id.tv_null);
+        tv_ort_artan = (TextView) findViewById(R.id.tv_kalan_deger);
+        tv_ort_gelir = (TextView) findViewById(R.id.tv_toplam_gelir);
+        tv_genel_kalan = (TextView) findViewById(R.id.tv_genel_kalan);
+        cv_genel_bilgi = (CardView) findViewById(R.id.cv_genel_bilgi);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +67,7 @@ public class HomeActivity extends AppCompatActivity {
         listView_annual.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(getApplicationContext(), MonthDetailActivity.class).putExtra(SELECTED_MONTH_ID, "" + parent.getAdapter().getItemId(position)));
+                startActivity(new Intent(getApplicationContext(), AylıkDetay.class).putExtra(SELECTED_MONTH_ID, "" + parent.getAdapter().getItemId(position)));
             }
         });
     }
@@ -76,8 +76,8 @@ public class HomeActivity extends AppCompatActivity {
     private void fetchSheetsFromDB() {
         ArrayList<SheetModel> sheetData = new ExpenseDB(this).getSheets();
         if (sheetData != null) {
-            tv_empty_info.setVisibility(View.GONE);
-            cv_overall_info.setVisibility(View.VISIBLE);
+            tv_null.setVisibility(View.GONE);
+            cv_genel_bilgi.setVisibility(View.VISIBLE);
             if (adapter == null) {
                 adapter = new MonthlyListAdapter(this, sheetData);
                 listView_annual.setAdapter(adapter);
@@ -92,20 +92,20 @@ public class HomeActivity extends AppCompatActivity {
             }
             double total_surplus = total_income - total_expense;
             DecimalFormat roundFormat = new DecimalFormat("#.##");
-            tv_overall_surplus.setText(AppConstants.CURRENCY + roundFormat.format(total_surplus));
+            tv_ort_artan.setText(AppConstants.CURRENCY + roundFormat.format(total_surplus));
             if (total_surplus > 0) {
-                tv_label_surplus.setText("Overall Surplus");
-                tv_label_surplus.setTextColor(getResources().getColor(R.color.colorSurplus));
-                tv_overall_surplus.setTextColor(getResources().getColor(R.color.colorSurplus));
+                tv_genel_kalan.setText("Overall Surplus");
+                tv_genel_kalan.setTextColor(getResources().getColor(R.color.colorSurplus));
+                tv_ort_artan.setTextColor(getResources().getColor(R.color.colorSurplus));
             } else {
-                tv_label_surplus.setText("Overall Deficit");
-                tv_label_surplus.setTextColor(getResources().getColor(R.color.colorDeficit));
-                tv_overall_surplus.setTextColor(getResources().getColor(R.color.colorDeficit));
+                tv_genel_kalan.setText("Overall Deficit");
+                tv_genel_kalan.setTextColor(getResources().getColor(R.color.colorDeficit));
+                tv_ort_artan.setTextColor(getResources().getColor(R.color.colorDeficit));
             }
-            tv_overall_income.setText("Total Income: " + AppConstants.CURRENCY + roundFormat.format(total_income));
+            tv_ort_gelir.setText("Total Income: " + AppConstants.CURRENCY + roundFormat.format(total_income));
         } else {
-            tv_empty_info.setVisibility(View.VISIBLE);
-            cv_overall_info.setVisibility(View.GONE);
+            tv_null.setVisibility(View.VISIBLE);
+            cv_genel_bilgi.setVisibility(View.GONE);
         }
     }
 
@@ -117,10 +117,10 @@ public class HomeActivity extends AppCompatActivity {
         dialogBuilder.setView(dialogView);
         dialogBuilder.setTitle("Add New Sheet");
 
-        final EditText et_income = (EditText) dialogView.findViewById(R.id.et_income);
-        final Spinner spinner_month = (Spinner) dialogView.findViewById(R.id.spinner_months);
-        final Spinner spinner_year = (Spinner) dialogView.findViewById(R.id.spinner_years);
-        Button btn_update = (Button) dialogView.findViewById(R.id.btn_add);
+        final EditText et_income = (EditText) dialogView.findViewById(R.id.et_gelir);
+        final Spinner spinner_month = (Spinner) dialogView.findViewById(R.id.spinner_aylar);
+        final Spinner spinner_year = (Spinner) dialogView.findViewById(R.id.spinner_yıllar);
+        Button btn_update = (Button) dialogView.findViewById(R.id.btn_ekle);
 
         ArrayList<String> yearsArray = new ArrayList<String>();
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -148,7 +148,7 @@ public class HomeActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "This sheet already exists", Toast.LENGTH_SHORT).show();
                     }
                 } else
-                    Toast.makeText(HomeActivity.this, "Please enter the income", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AnaSayfa.this, "Please enter the income", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -1,4 +1,4 @@
-package com.fm.expensecalculator.utils;
+package com.fm.egecuzdan.utils;
 
 public class AppConstants {
 

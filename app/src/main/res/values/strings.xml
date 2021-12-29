@@ -1,36 +1,36 @@
 <resources>
-    <string name="app_name">Expense Calculator</string>
-    <string name="title_activity_home">Expense Calculator</string>
-    <string name="label_amount">Amount (€)</string>
-    <string name="label_description">Description</string>
-    <string name="label_type_of_expense">Type of Expense</string>
-    <string name="non_regular">Non-Regular</string>
-    <string name="regular">Regular</string>
-    <string name="label_date">Date</string>
-    <string name="label_add">Add</string>
-    <string name="label_update">Update</string>
-    <string name="empty_sheet_info">You don\'t have any sheets \nClick + button to add new sheet</string>
-    <string name="label_total">Total</string>
-    <string name="empty_expense_info">No expense recorded for this month \nClick + button to add an expense</string>
-    <string name="label_choose_month">Choose Month</string>
-    <string name="label_choose_year">Choose Year</string>
-    <string name="label_income">Income (€)</string>
-    <string name="label_edit">Edit</string>
-    <string name="label_delete">Delete</string>
+    <string name="app_name">Ege Cüzdan</string>
+    <string name="title_ana_sayfa">Ege Cüzdan</string>
+    <string name="label_miktar">Miktar (₺)</string>
+    <string name="label_açıklama">Açıklama</string>
+    <string name="label_harcama_türü">Harcama Türü</string>
+    <string name="düzensiz">Düzensiz</string>
+    <string name="düzenli">Düzenli</string>
+    <string name="label_tarih">Tarih</string>
+    <string name="label_ekle">Ekle</string>
+    <string name="label_güncelle">Güncelle</string>
+    <string name="empty_sheet_bilgi">Hiçbir tablonuz bulunmamaktadır. \nYeni tablo oluşturmak için + tuşuna basınız.</string>
+    <string name="label_toplam">Toplam</string>
+    <string name="boş_harcama_bilgi">Bu ay için hiçbir harcama girilmedi. \nYeni harcama eklemek için + tuşuna basınız.</string>
+    <string name="label_seç_ay">Ayı Seçiniz</string>
+    <string name="label_seç_yıl">Yılı Seçiniz</string>
+    <string name="label_gelir">Gelir (₺)</string>
+    <string name="label_düzenle">Düzenle</string>
+    <string name="label_sil">Sil</string>
 
-    <string-array name="months">
-        <item>January</item>
-        <item>February</item>
-        <item>March</item>
-        <item>April</item>
-        <item>May</item>
-        <item>June</item>
-        <item>July</item>
-        <item>August</item>
-        <item>September</item>
-        <item>October</item>
-        <item>November</item>
-        <item>December</item>
+    <string-array name="aylar">
+        <item>Ocak</item>
+        <item>Şubat</item>
+        <item>Mart</item>
+        <item>Nisan</item>
+        <item>Mayıs</item>
+        <item>Haziran</item>
+        <item>Temmuz</item>
+        <item>Ağustos</item>
+        <item>Eylül</item>
+        <item>Ekim</item>
+        <item>Kasım</item>
+        <item>Aralık</item>
     </string-array>
 
 </resources>

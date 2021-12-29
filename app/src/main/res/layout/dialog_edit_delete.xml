@@ -12,23 +12,23 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:drawableRight="@drawable/ic_edit"
-        android:text="@string/label_edit"
-        android:textColor="@color/colorRegular" />
+        android:text="@string/label_düzenle"
+        android:textColor="@color/colorDüzenli" />
 
     <Button
-        android:id="@+id/btn_delete"
+        android:id="@+id/btn_sil"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/colorDeficit"
-        android:text="@string/label_delete" />
+        android:text="@string/label_sil" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
-        android:text="Warning: Delete action cannot be undone"
+        android:text="Uyarı: Yapılan işlem geri alınamaz!"
         android:textColor="@color/colorDeficit"
         android:textSize="10sp"
         android:visibility="gone" />

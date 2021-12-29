@@ -1,4 +1,4 @@
-package com.fm.expensecalculator.view;
+package com.fm.egecuzdan.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,20 +11,20 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.fm.expensecalculator.R;
-import com.fm.expensecalculator.db.ExpenseDB;
-import com.fm.expensecalculator.db.models.ExpenseModel;
+import com.fm.egecuzdan.R;
+import com.fm.egecuzdan.db.ExpenseDB;
+import com.fm.egecuzdan.db.models.ExpenseModel;
 
 import java.util.Calendar;
 
-import static com.fm.expensecalculator.utils.AppConstants.INTENT_MODE;
-import static com.fm.expensecalculator.utils.AppConstants.INTENT_MODE_ADD;
-import static com.fm.expensecalculator.utils.AppConstants.SELECTED_EXPENSE;
-import static com.fm.expensecalculator.utils.AppConstants.SELECTED_MONTH;
-import static com.fm.expensecalculator.utils.AppConstants.SELECTED_MONTH_ID;
-import static com.fm.expensecalculator.utils.AppConstants.SELECTED_YEAR;
+import static com.fm.egecuzdan.utils.AppConstants.INTENT_MODE;
+import static com.fm.egecuzdan.utils.AppConstants.INTENT_MODE_ADD;
+import static com.fm.egecuzdan.utils.AppConstants.SELECTED_EXPENSE;
+import static com.fm.egecuzdan.utils.AppConstants.SELECTED_MONTH;
+import static com.fm.egecuzdan.utils.AppConstants.SELECTED_MONTH_ID;
+import static com.fm.egecuzdan.utils.AppConstants.SELECTED_YEAR;
 
-public class AddExpenseActivity extends AppCompatActivity {
+public class GiderEkleme extends AppCompatActivity {
 
     private EditText et_remarks, et_amount;
     private Button btn_save;
@@ -43,13 +43,13 @@ public class AddExpenseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_expense);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        et_remarks = (EditText) findViewById(R.id.et_remarks);
-        et_amount = (EditText) findViewById(R.id.et_amount);
-        btn_save = (Button) findViewById(R.id.btn_save);
+        et_remarks = (EditText) findViewById(R.id.et_açıklama);
+        et_amount = (EditText) findViewById(R.id.et_miktar);
+        btn_save = (Button) findViewById(R.id.btn_kaydet);
         datePicker = (DatePicker) findViewById(R.id.date_picker);
-        rb_regular = (RadioButton) findViewById(R.id.rb_reg);
-        rb_non_regular = (RadioButton) findViewById(R.id.rb_non_reg);
-        btn_update = (Button) findViewById(R.id.btn_update);
+        rb_regular = (RadioButton) findViewById(R.id.rb_düzenli);
+        rb_non_regular = (RadioButton) findViewById(R.id.rb_düznsiz);
+        btn_update = (Button) findViewById(R.id.btn_güncelle);
 
         sel_month_id = getIntent().getStringExtra(SELECTED_MONTH_ID);
         sel_month = getIntent().getStringExtra(SELECTED_MONTH);
@@ -94,7 +94,7 @@ public class AddExpenseActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (validate()) {
                     new ExpenseDB(getApplicationContext()).addExpense(et_amount.getText().toString(), et_remarks.getText().toString(), String.valueOf(datePicker.getDayOfMonth()), rb_regular.isChecked(), sel_month_id);
-                    Toast.makeText(AddExpenseActivity.this, "Added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GiderEkleme.this, "Added", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onClick: save " + rb_regular.isChecked());
                     finish();
                 }
@@ -106,7 +106,7 @@ public class AddExpenseActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (validate()) {
                     new ExpenseDB(getApplicationContext()).updateExpense(et_amount.getText().toString(), et_remarks.getText().toString(), String.valueOf(datePicker.getDayOfMonth()), rb_regular.isChecked(), expenseModel.getId());
-                    Toast.makeText(AddExpenseActivity.this, "Added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GiderEkleme.this, "Added", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onClick: upd " + rb_regular.isChecked());
                     finish();
                 }
@@ -116,7 +116,7 @@ public class AddExpenseActivity extends AppCompatActivity {
 
     //returns month number
     private int getMonthNumber(String month) {
-        String[] months = getResources().getStringArray(R.array.months);
+        String[] months = getResources().getStringArray(R.array.aylar);
         for (int i = 0; i < months.length; i++) {
             if (months[i].equalsIgnoreCase(month)) {
                 return i;

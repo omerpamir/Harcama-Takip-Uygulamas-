@@ -1,30 +1,17 @@
-package com.fm.expensecalculator.adapters;
+package com.fm.egecuzdan.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.fm.expensecalculator.R;
-import com.fm.expensecalculator.db.ExpenseDB;
-import com.fm.expensecalculator.db.models.ExpenseModel;
-import com.fm.expensecalculator.utils.AppConstants;
-import com.fm.expensecalculator.view.AddExpenseActivity;
-import com.fm.expensecalculator.view.MonthDetailActivity;
+import com.fm.egecuzdan.R;
+import com.fm.egecuzdan.db.models.ExpenseModel;
+import com.fm.egecuzdan.utils.AppConstants;
 
 import java.util.ArrayList;
-
-import static com.fm.expensecalculator.utils.AppConstants.INTENT_MODE;
-import static com.fm.expensecalculator.utils.AppConstants.INTENT_MODE_EDIT;
-import static com.fm.expensecalculator.utils.AppConstants.SELECTED_MONTH;
-import static com.fm.expensecalculator.utils.AppConstants.SELECTED_MONTH_ID;
-import static com.fm.expensecalculator.utils.AppConstants.SELECTED_YEAR;
 
 public class ExpenseListAdapter extends BaseAdapter {
 
@@ -64,12 +51,12 @@ public class ExpenseListAdapter extends BaseAdapter {
         if (convertView == null) {
             viewContainer = new ViewContainer();
             layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.row_list_item_expense, parent, false);
+            convertView = layoutInflater.inflate(R.layout.row_list_item_gider, parent, false);
 
-            viewContainer.tv_amount = (TextView) convertView.findViewById(R.id.tv_amount);
-            viewContainer.tv_description = (TextView) convertView.findViewById(R.id.tv_description);
-            viewContainer.tv_regular = (TextView) convertView.findViewById(R.id.tv_regular);
-            viewContainer.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
+            viewContainer.tv_amount = (TextView) convertView.findViewById(R.id.tv_miktar);
+            viewContainer.tv_description = (TextView) convertView.findViewById(R.id.tv_açıklama);
+            viewContainer.tv_regular = (TextView) convertView.findViewById(R.id.tv_düzenli);
+            viewContainer.tv_date = (TextView) convertView.findViewById(R.id.tv_tarih);
 
             convertView.setTag(viewContainer);
         } else {

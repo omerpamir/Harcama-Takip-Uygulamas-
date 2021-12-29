@@ -1,4 +1,4 @@
-package com.fm.expensecalculator.db.models;
+package com.fm.egecuzdan.db.models;
 
 public class SheetModel {
 

@@ -1,17 +1,16 @@
-package com.fm.expensecalculator.adapters;
+package com.fm.egecuzdan.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.fm.expensecalculator.R;
-import com.fm.expensecalculator.db.ExpenseDB;
-import com.fm.expensecalculator.db.models.SheetModel;
-import com.fm.expensecalculator.utils.AppConstants;
+import com.fm.egecuzdan.R;
+import com.fm.egecuzdan.db.ExpenseDB;
+import com.fm.egecuzdan.db.models.SheetModel;
+import com.fm.egecuzdan.utils.AppConstants;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -54,12 +53,12 @@ public class MonthlyListAdapter extends BaseAdapter {
         if (convertView == null) {
             viewContainer = new ViewContainer();
             layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.row_list_item_sheet, parent, false);
+            convertView = layoutInflater.inflate(R.layout.row_list_item_tablo, parent, false);
 
-            viewContainer.tv_income = (TextView) convertView.findViewById(R.id.tv_income);
-            viewContainer.tv_month = (TextView) convertView.findViewById(R.id.tv_month);
-            viewContainer.tv_year = (TextView) convertView.findViewById(R.id.tv_year);
-            viewContainer.tv_surplus = (TextView) convertView.findViewById(R.id.tv_surplus);
+            viewContainer.tv_income = (TextView) convertView.findViewById(R.id.tv_gelir);
+            viewContainer.tv_month = (TextView) convertView.findViewById(R.id.tv_ay);
+            viewContainer.tv_year = (TextView) convertView.findViewById(R.id.tv_yıl);
+            viewContainer.tv_surplus = (TextView) convertView.findViewById(R.id.tv_artan);
 
             convertView.setTag(viewContainer);
         } else {

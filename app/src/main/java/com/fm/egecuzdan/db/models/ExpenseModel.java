@@ -1,4 +1,4 @@
-package com.fm.expensecalculator.db.models;
+package com.fm.egecuzdan.db.models;
 
 import java.io.Serializable;
 

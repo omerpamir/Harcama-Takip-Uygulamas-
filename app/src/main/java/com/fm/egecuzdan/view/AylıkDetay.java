@@ -1,4 +1,4 @@
-package com.fm.expensecalculator.view;
+package com.fm.egecuzdan.view;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
@@ -9,36 +9,34 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fm.expensecalculator.R;
-import com.fm.expensecalculator.adapters.ExpenseListAdapter;
-import com.fm.expensecalculator.db.ExpenseDB;
-import com.fm.expensecalculator.db.models.ExpenseModel;
-import com.fm.expensecalculator.db.models.SheetModel;
-import com.fm.expensecalculator.utils.AppConstants;
-import com.fm.expensecalculator.view.custom.CustomPieChart;
+import com.fm.egecuzdan.R;
+import com.fm.egecuzdan.adapters.ExpenseListAdapter;
+import com.fm.egecuzdan.db.ExpenseDB;
+import com.fm.egecuzdan.db.models.ExpenseModel;
+import com.fm.egecuzdan.db.models.SheetModel;
+import com.fm.egecuzdan.utils.AppConstants;
+import com.fm.egecuzdan.view.custom.CustomPieChart;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import static com.fm.expensecalculator.utils.AppConstants.INTENT_MODE;
-import static com.fm.expensecalculator.utils.AppConstants.INTENT_MODE_ADD;
-import static com.fm.expensecalculator.utils.AppConstants.INTENT_MODE_EDIT;
-import static com.fm.expensecalculator.utils.AppConstants.SELECTED_EXPENSE;
-import static com.fm.expensecalculator.utils.AppConstants.SELECTED_MONTH;
-import static com.fm.expensecalculator.utils.AppConstants.SELECTED_MONTH_ID;
-import static com.fm.expensecalculator.utils.AppConstants.SELECTED_YEAR;
+import static com.fm.egecuzdan.utils.AppConstants.INTENT_MODE;
+import static com.fm.egecuzdan.utils.AppConstants.INTENT_MODE_ADD;
+import static com.fm.egecuzdan.utils.AppConstants.INTENT_MODE_EDIT;
+import static com.fm.egecuzdan.utils.AppConstants.SELECTED_EXPENSE;
+import static com.fm.egecuzdan.utils.AppConstants.SELECTED_MONTH;
+import static com.fm.egecuzdan.utils.AppConstants.SELECTED_MONTH_ID;
+import static com.fm.egecuzdan.utils.AppConstants.SELECTED_YEAR;
 
-public class MonthDetailActivity extends AppCompatActivity {
+public class AylıkDetay extends AppCompatActivity {
 
     private ListView listView_months;
     private ExpenseListAdapter adapter;
@@ -64,14 +62,14 @@ public class MonthDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        listView_months = (ListView) findViewById(R.id.listview_months);
-        tv_income = (TextView) findViewById(R.id.tv_income);
-        tv_month = (TextView) findViewById(R.id.tv_month);
-        tv_surplus = (TextView) findViewById(R.id.tv_surplus);
-        tv_empty_info = (TextView) findViewById(R.id.tv_empty_info);
-        tv_total_regular = (TextView) findViewById(R.id.tv_total_regular);
-        tv_total_non_regular = (TextView) findViewById(R.id.tv_total_non_regular);
-        layout_totals = (RelativeLayout) findViewById(R.id.layout_totals);
+        listView_months = (ListView) findViewById(R.id.listview_aylar);
+        tv_income = (TextView) findViewById(R.id.tv_gelir);
+        tv_month = (TextView) findViewById(R.id.tv_ay);
+        tv_surplus = (TextView) findViewById(R.id.tv_artan);
+        tv_empty_info = (TextView) findViewById(R.id.tv_null);
+        tv_total_regular = (TextView) findViewById(R.id.tv_toplam_düzenli);
+        tv_total_non_regular = (TextView) findViewById(R.id.tv_toplam_düzensiz);
+        layout_totals = (RelativeLayout) findViewById(R.id.layout_toplamlar);
         pieChart = (CustomPieChart) findViewById(R.id.pie_chart);
 
         month_id = getIntent().getStringExtra(SELECTED_MONTH_ID);
@@ -80,7 +78,7 @@ public class MonthDetailActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), AddExpenseActivity.class)
+                startActivity(new Intent(getApplicationContext(), GiderEkleme.class)
                         .putExtra(SELECTED_MONTH_ID, month_id)
                         .putExtra(SELECTED_MONTH, sel_month)
                         .putExtra(SELECTED_YEAR, sel_year)
@@ -178,9 +176,9 @@ public class MonthDetailActivity extends AppCompatActivity {
         dialogBuilder.setView(dialogView);
         dialogBuilder.setTitle("Edit Income");
 
-        final EditText et_income = (EditText) dialogView.findViewById(R.id.et_income);
+        final EditText et_income = (EditText) dialogView.findViewById(R.id.et_gelir);
         et_income.setText(income + "");
-        Button btn_update = (Button) dialogView.findViewById(R.id.btn_update);
+        Button btn_update = (Button) dialogView.findViewById(R.id.btn_güncelle);
 
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
@@ -190,12 +188,12 @@ public class MonthDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (et_income.getText().toString().length() > 0 && !et_income.getText().toString().equalsIgnoreCase("") && !et_income.getText().toString().equalsIgnoreCase(".")) {
                     new ExpenseDB(getApplicationContext()).editIncome(Double.valueOf(et_income.getText().toString()), month_id);
-                    Toast.makeText(MonthDetailActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AylıkDetay.this, "Updated", Toast.LENGTH_SHORT).show();
                     alertDialog.dismiss();
                     fetchIncomeFromDB();
                     fetchExpenseFromDB();
                 } else
-                    Toast.makeText(MonthDetailActivity.this, "Please enter the income", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AylıkDetay.this, "Please enter the income", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -207,7 +205,7 @@ public class MonthDetailActivity extends AppCompatActivity {
         dialogBuilder.setView(dialogView);
 //        dialogBuilder.setTitle("Edit Income");
 
-        Button btn_delete = (Button) dialogView.findViewById(R.id.btn_delete);
+        Button btn_delete = (Button) dialogView.findViewById(R.id.btn_sil);
         Button btn_edit = (Button) dialogView.findViewById(R.id.btn_edit);
 
         final AlertDialog alertDialog = dialogBuilder.create();
@@ -216,7 +214,7 @@ public class MonthDetailActivity extends AppCompatActivity {
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), AddExpenseActivity.class)
+                startActivity(new Intent(getApplicationContext(), GiderEkleme.class)
                         .putExtra(SELECTED_MONTH_ID, month_id)
                         .putExtra(SELECTED_MONTH, sel_month)
                         .putExtra(SELECTED_YEAR, sel_year)
@@ -230,7 +228,7 @@ public class MonthDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new ExpenseDB(getApplicationContext()).deleteExpense(itemId);
-                Toast.makeText(MonthDetailActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AylıkDetay.this, "Deleted", Toast.LENGTH_SHORT).show();
                 alertDialog.dismiss();
 
 //                fetchIncomeFromDB();

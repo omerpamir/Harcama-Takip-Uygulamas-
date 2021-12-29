@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.AddExpenseActivity">
+    tools:context=".view.GiderEkleme">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/btn_save">
+        android:layout_above="@+id/btn_kaydet">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,10 +19,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_amount" />
+                android:text="@string/label_miktar" />
 
             <EditText
-                android:id="@+id/et_amount"
+                android:id="@+id/et_miktar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -33,10 +33,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_description" />
+                android:text="@string/label_açıklama" />
 
             <EditText
-                android:id="@+id/et_remarks"
+                android:id="@+id/et_açıklama"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -47,7 +47,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_type_of_expense" />
+                android:text="@string/label_harcama_türü" />
 
             <RadioGroup
                 android:id="@+id/rb_group"
@@ -57,26 +57,26 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/rb_non_reg"
+                    android:id="@+id/rb_düznsiz"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:checked="true"
-                    android:text="@string/non_regular" />
+                    android:text="@string/düzensiz" />
 
                 <RadioButton
-                    android:id="@+id/rb_reg"
+                    android:id="@+id/rb_düzenli"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/regular" />
+                    android:text="@string/düzenli" />
 
             </RadioGroup>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/fab_margin"
-                android:text="@string/label_date" />
+                android:text="@string/label_tarih" />
 
             <DatePicker
                 android:id="@+id/date_picker"
@@ -89,21 +89,22 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/btn_save"
+        android:id="@+id/btn_kaydet"
         style="@style/Base.Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="@string/label_add" />
+        android:text="@string/label_ekle"
+        android:textColor="#6D4C41" />
 
     <Button
-        android:id="@+id/btn_update"
+        android:id="@+id/btn_güncelle"
         style="@style/Base.Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:backgroundTint="@color/colorAccentSecondary"
-        android:text="@string/label_update"
+        android:text="@string/label_güncelle"
         android:visibility="gone" />
 
 </RelativeLayout>

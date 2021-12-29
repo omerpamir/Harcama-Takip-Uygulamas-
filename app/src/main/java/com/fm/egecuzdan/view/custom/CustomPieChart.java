@@ -1,4 +1,4 @@
-package com.fm.expensecalculator.view.custom;
+package com.fm.egecuzdan.view.custom;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,10 +7,9 @@ import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
-import com.fm.expensecalculator.R;
+import com.fm.egecuzdan.R;
 
 import java.util.ArrayList;
 
@@ -35,10 +34,10 @@ public class CustomPieChart extends View {
     protected void onDraw(Canvas canvas) {
         if (pieValues != null) {
             //draw regular arc
-            paint.setColor(ContextCompat.getColor(getContext(), R.color.colorRegular));
+            paint.setColor(ContextCompat.getColor(getContext(), R.color.colorDüzenli));
             canvas.drawArc(rectF, 0, pieValues.get(0), true, paint);
             //draw non-regular arc
-            paint.setColor(ContextCompat.getColor(getContext(), R.color.colorNonRegular));
+            paint.setColor(ContextCompat.getColor(getContext(), R.color.colorDüzensiz));
             canvas.drawArc(rectF, pieValues.get(0), pieValues.get(1), true, paint);
         }
     }

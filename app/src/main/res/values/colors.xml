@@ -11,8 +11,8 @@
 
     <color name="colorDivider">#dedede</color>
 
-    <color name="colorRegular">#64b5f6</color>
-    <color name="colorNonRegular">#01579b</color>
+    <color name="colorDüzenli">#64b5f6</color>
+    <color name="colorDüzensiz">#01579b</color>
 
     <color name="colorSurplus">#8bc34a</color>
     <color name="colorDeficit">#d84315</color>

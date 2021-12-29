@@ -1,4 +1,4 @@
-package com.fm.expensecalculator;
+package com.fm.egecuzdan;
 
 import org.junit.Test;
 

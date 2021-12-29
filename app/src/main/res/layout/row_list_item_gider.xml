@@ -6,50 +6,50 @@
     android:paddingHorizontal="@dimen/padd_default"
     android:paddingVertical="5dp">
 
+    <TextView
+        android:id="@+id/tv_tarih"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:minWidth="20dp"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        tools:text="29\nOcak" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_margin="5dp"
-        android:layout_toLeftOf="@+id/layout_totals"
+        android:layout_toLeftOf="@+id/tv_miktar"
+        android:layout_toRightOf="@+id/tv_tarih"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_month"
+            android:id="@+id/tv_açıklama"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
             android:textStyle="bold"
-            tools:text="January" />
+            tools:text="Açıklama" />
 
         <TextView
-            android:id="@+id/tv_year"
+            android:id="@+id/tv_düzenli"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="2018" />
+            android:textSize="10sp"
+            tools:text="Düzenli" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layout_totals"
+    <TextView
+        android:id="@+id/tv_miktar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_income"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Income: $1299" />
-
-        <TextView
-            android:id="@+id/tv_surplus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Surplus: $1299" />
-
-    </LinearLayout>
+        android:textSize="16sp"
+        tools:text=" ₺1996" />
 
 </RelativeLayout>
