@@ -139,7 +139,7 @@ public class AnaSayfa extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (et_income.getText().toString().length() > 0) {
-                    boolean status = new ExpenseDB(getApplicationContext()).addNewSheet(String.valueOf(spinner_month.getSelectedItemPosition()), spinner_year.getSelectedItem().toString(), Double.parseDouble(et_income.getText().toString()));
+                    boolean status = new ExpenseDB(getApplicationContext()).yeniSheetEkle(String.valueOf(spinner_month.getSelectedItemPosition()), spinner_year.getSelectedItem().toString(), Double.parseDouble(et_income.getText().toString()));
                     if (status) {
                         Toast.makeText(getApplicationContext(), "Yeni sheet eklendi", Toast.LENGTH_SHORT).show();
                         alertDialog.dismiss();

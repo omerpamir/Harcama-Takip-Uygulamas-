@@ -14,50 +14,50 @@ import java.util.ArrayList;
 
 public class ExpenseDB extends SQLiteOpenHelper {
 
-    private static String DB_NAME = "expense_calc.db";
-    private static int DB_VERSION = 1;
+    private static String DB_ISIM = "expense_calc.db";
+    private static int DB_VERSIYON = 1;
 
-    //for expense table
-    private static final String TABLE_EXPENSE = "expense";
-    private static final String FIELD_ID = "id_expense";
-    private static final String FIELD__REMARKS = "remarks";
-    private static final String FIELD_AMOUNT = "amount";
-    private static final String FIELD_DATE = "date";
-    private static final String FIELD_IS_REGULAR = "is_regular";
+    //expense tablosu için
+    private static final String EXPENSE_TABLO = "expense";
+    private static final String ALAN_KIMLIK = "id_expense";
+    private static final String ALAN_REMARKS = "remarks";
+    private static final String ALAN_MIKTAR = "amount";
+    private static final String ALAN_TARIH = "date";
+    private static final String ALAN_REGULAR = "is_regular";
 
-    //foreign key references sheet table's month id
-    private static final String FIELD_MONTH_ID = "id_month";
+    //foreign key sheet tablosunun ay id'sini referans ediyor
+    private static final String ALAN_AY_ID = "id_month";
 
-    //for sheets table
-    private static final String TABLE_SHEETS = "sheets";
-    private static final String FIELD_MONTH = "month";
-    private static final String FIELD_YEAR = "year";
-    private static final String FIELD_INCOME = "income";
+    //sheets tablosu için
+    private static final String SHEETS_TABLO = "sheets";
+    private static final String ALAN_AY = "month";
+    private static final String ALAN_YIL = "year";
+    private static final String ALAN_GELIR = "income";
 
     private Context context;
     private SQLiteDatabase database;
 
-    private static final String CREATE_TABLE_EXPENSE = "create table if not exists " + TABLE_EXPENSE
+    private static final String EXPENSE_TABLO_OLUSTUR = "create table if not exists " + EXPENSE_TABLO
             + " ("
-            + FIELD_ID + " integer primary key autoincrement,"
-            + FIELD__REMARKS + " text,"
-            + FIELD_AMOUNT + " double not null,"
-            + FIELD_IS_REGULAR + " text not null,"
-            + FIELD_DATE + " int not null,"
-            + FIELD_MONTH_ID + " integer not null,"
-            + " FOREIGN KEY (" + FIELD_MONTH_ID + ") REFERENCES " + TABLE_SHEETS + "(" + FIELD_MONTH_ID + ")"
+            + ALAN_KIMLIK + " integer primary key autoincrement,"
+            + ALAN_REMARKS + " text,"
+            + ALAN_MIKTAR + " double not null,"
+            + ALAN_REGULAR + " text not null,"
+            + ALAN_TARIH + " int not null,"
+            + ALAN_AY_ID + " integer not null,"
+            + " FOREIGN KEY (" + ALAN_AY_ID + ") REFERENCES " + SHEETS_TABLO + "(" + ALAN_AY_ID + ")"
             + ")";
 
-    private static final String CREATE_TABLE_SHEETS = "create table if not exists " + TABLE_SHEETS
+    private static final String CREATE_TABLE_SHEETS = "create table if not exists " + SHEETS_TABLO
             + " ("
-            + FIELD_MONTH_ID + " integer primary key autoincrement,"
-            + FIELD_MONTH + " int not null,"
-            + FIELD_YEAR + " int not null,"
-            + FIELD_INCOME + " double not null"
+            + ALAN_AY_ID + " integer primary key autoincrement,"
+            + ALAN_AY + " int not null,"
+            + ALAN_YIL + " int not null,"
+            + ALAN_GELIR + " double not null"
             + ")";
 
     public ExpenseDB(Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
+        super(context, DB_ISIM, null, DB_VERSIYON);
         this.context = context;
         this.database = getWritableDatabase();
     }
@@ -65,24 +65,24 @@ public class ExpenseDB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_SHEETS);
-        db.execSQL(CREATE_TABLE_EXPENSE);
+        db.execSQL(EXPENSE_TABLO_OLUSTUR);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXPENSE);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SHEETS);
+        db.execSQL("DROP TABLE IF EXISTS " + EXPENSE_TABLO);
+        db.execSQL("DROP TABLE IF EXISTS " + SHEETS_TABLO);
         onCreate(db);
     }
 
     //add a new sheet in sheets table
-    public boolean addNewSheet(String month, String year, double income) {
+    public boolean yeniSheetEkle(String ay, String yıl, double gelir) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(FIELD_MONTH, month);
-        contentValues.put(FIELD_YEAR, year);
-        contentValues.put(FIELD_INCOME, income);
-        if (checkIfSheetExists(month, year)) {
-            database.insert(TABLE_SHEETS, null, contentValues);
+        contentValues.put(ALAN_AY, ay);
+        contentValues.put(ALAN_YIL, yıl);
+        contentValues.put(ALAN_GELIR, gelir);
+        if (checkIfSheetExists(ay, yıl)) {
+            database.insert(SHEETS_TABLO, null, contentValues);
             database.close();
             return true;
         } else {
@@ -90,10 +90,10 @@ public class ExpenseDB extends SQLiteOpenHelper {
         }
     }
 
-    //returns the list of all expenses from the expense table
-    public ArrayList<GiderModel> getExpenses(String month_id) {
+    //expense tablodan bütün expense'lerin listesi döndürülüyor
+    public ArrayList<GiderModel> getExpenses(String ay_id) {
         ArrayList<GiderModel> giderModelList = new ArrayList<>();
-        Cursor cursor = database.query(TABLE_EXPENSE, null, FIELD_MONTH_ID + "=?", new String[]{month_id}, null, null, FIELD_DATE);
+        Cursor cursor = database.query(EXPENSE_TABLO, null, ALAN_AY_ID + "=?", new String[]{ay_id}, null, null, ALAN_TARIH);
         if (cursor.getCount() <= 0)
             return null;
 
@@ -101,11 +101,11 @@ public class ExpenseDB extends SQLiteOpenHelper {
 
         do {
             GiderModel expenseMode = new GiderModel();
-            expenseMode.setId(cursor.getInt(cursor.getColumnIndex(FIELD_ID)));
-            expenseMode.setAçıklama(cursor.getString(cursor.getColumnIndex(FIELD__REMARKS)));
-            expenseMode.setMiktar(cursor.getString(cursor.getColumnIndex(FIELD_AMOUNT)));
-            expenseMode.setTarih(cursor.getString(cursor.getColumnIndex(FIELD_DATE)));
-            expenseMode.setDüzenliÖdemedir(getBooleanFormat(cursor.getInt(cursor.getColumnIndex(FIELD_IS_REGULAR))));
+            expenseMode.setId(cursor.getInt(cursor.getColumnIndex(ALAN_KIMLIK)));
+            expenseMode.setAçıklama(cursor.getString(cursor.getColumnIndex(ALAN_REMARKS)));
+            expenseMode.setMiktar(cursor.getString(cursor.getColumnIndex(ALAN_MIKTAR)));
+            expenseMode.setTarih(cursor.getString(cursor.getColumnIndex(ALAN_TARIH)));
+            expenseMode.setDüzenliÖdemedir(getBooleanFormat(cursor.getInt(cursor.getColumnIndex(ALAN_REGULAR))));
             giderModelList.add(expenseMode);
         } while (cursor.moveToNext());
 
@@ -114,20 +114,20 @@ public class ExpenseDB extends SQLiteOpenHelper {
         return giderModelList;
     }
 
-    //returns the sheet data for a specific month
+    //belirli bir ay için sheet verisini döndürme
     public SheetModel getIncomeData(String month_id) {
         SheetModel sheetModel = new SheetModel();
-        Cursor cursor = database.query(TABLE_SHEETS, null, FIELD_MONTH_ID + "=?", new String[]{month_id}, null, null, null);
+        Cursor cursor = database.query(SHEETS_TABLO, null, ALAN_AY_ID + "=?", new String[]{month_id}, null, null, null);
         if (cursor.getCount() <= 0)
             return null;
 
         cursor.moveToFirst();
 
         do {
-            sheetModel.setId(cursor.getInt(cursor.getColumnIndex(FIELD_MONTH_ID)));
-            sheetModel.setGelir(cursor.getDouble(cursor.getColumnIndex(FIELD_INCOME)));
-            sheetModel.setAy(getMonthName(cursor.getString(cursor.getColumnIndex(FIELD_MONTH))));
-            sheetModel.setYıl(cursor.getString(cursor.getColumnIndex(FIELD_YEAR)));
+            sheetModel.setId(cursor.getInt(cursor.getColumnIndex(ALAN_AY_ID)));
+            sheetModel.setGelir(cursor.getDouble(cursor.getColumnIndex(ALAN_GELIR)));
+            sheetModel.setAy(getMonthName(cursor.getString(cursor.getColumnIndex(ALAN_AY))));
+            sheetModel.setYıl(cursor.getString(cursor.getColumnIndex(ALAN_YIL)));
         } while (cursor.moveToNext());
 
         cursor.close();
@@ -135,31 +135,31 @@ public class ExpenseDB extends SQLiteOpenHelper {
         return sheetModel;
     }
 
-    //edit the income in sheets table
+    //sheets tablosunda "gelir"i düzenleme
     public void editIncome(double income, String month_id) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(FIELD_INCOME, income);
+        contentValues.put(ALAN_GELIR, income);
         String[] args = {month_id};
-        database.update(TABLE_SHEETS, contentValues, FIELD_MONTH_ID + "=?", args);
+        database.update(SHEETS_TABLO, contentValues, ALAN_AY_ID + "=?", args);
         database.close();
     }
 
-    //edit expense entry with the specific id
-    public void updateExpense(String amount, String remarks, String date, boolean bool, int sel_expense_id) {
+    //expense girişini belirli id ile düzenleme
+    public void updateExpense(String miktar, String remarks, String tarih, boolean bool, int secili_expense_id) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(FIELD__REMARKS, remarks);
-        contentValues.put(FIELD_AMOUNT, amount);
-        contentValues.put(FIELD_DATE, date);
-        contentValues.put(FIELD_IS_REGULAR, bool);
-        String[] args = {String.valueOf(sel_expense_id)};
-        database.update(TABLE_EXPENSE, contentValues, FIELD_ID + "=?", args);
+        contentValues.put(ALAN_REMARKS, remarks);
+        contentValues.put(ALAN_MIKTAR, miktar);
+        contentValues.put(ALAN_TARIH, tarih);
+        contentValues.put(ALAN_REGULAR, bool);
+        String[] args = {String.valueOf(secili_expense_id)};
+        database.update(EXPENSE_TABLO, contentValues, ALAN_KIMLIK + "=?", args);
         database.close();
     }
 
-    //returns the list of all sheets from the sheet table
+    // sheet tablosundan bütün sheetlerin listesini döndürme
     public ArrayList<SheetModel> getSheets() {
         ArrayList<SheetModel> sheetModelList = new ArrayList<>();
-        Cursor cursor = database.query(TABLE_SHEETS, null, null, null, null, null, FIELD_YEAR + " , " + FIELD_MONTH);
+        Cursor cursor = database.query(SHEETS_TABLO, null, null, null, null, null, ALAN_YIL + " , " + ALAN_AY);
         if (cursor.getCount() <= 0)
             return null;
 
@@ -167,10 +167,10 @@ public class ExpenseDB extends SQLiteOpenHelper {
 
         do {
             SheetModel sheetModel = new SheetModel();
-            sheetModel.setId(cursor.getInt(cursor.getColumnIndex(FIELD_MONTH_ID)));
-            sheetModel.setGelir(cursor.getDouble(cursor.getColumnIndex(FIELD_INCOME)));
-            sheetModel.setAy(getMonthName(cursor.getString(cursor.getColumnIndex(FIELD_MONTH))));
-            sheetModel.setYıl(cursor.getString(cursor.getColumnIndex(FIELD_YEAR)));
+            sheetModel.setId(cursor.getInt(cursor.getColumnIndex(ALAN_AY_ID)));
+            sheetModel.setGelir(cursor.getDouble(cursor.getColumnIndex(ALAN_GELIR)));
+            sheetModel.setAy(getMonthName(cursor.getString(cursor.getColumnIndex(ALAN_AY))));
+            sheetModel.setYıl(cursor.getString(cursor.getColumnIndex(ALAN_YIL)));
             sheetModelList.add(sheetModel);
         } while (cursor.moveToNext());
 
@@ -179,53 +179,53 @@ public class ExpenseDB extends SQLiteOpenHelper {
         return sheetModelList;
     }
 
-    //add a new expense entry in expense table
+    //expense tablosuna yeni expense ekleme
     public void addExpense(String amount, String remarks, String date, boolean bool, String sel_month_id) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(FIELD__REMARKS, remarks);
-        contentValues.put(FIELD_AMOUNT, amount);
-        contentValues.put(FIELD_DATE, date);
-        contentValues.put(FIELD_IS_REGULAR, bool);
-        contentValues.put(FIELD_MONTH_ID, sel_month_id);
-        database.insert(TABLE_EXPENSE, null, contentValues);
+        contentValues.put(ALAN_REMARKS, remarks);
+        contentValues.put(ALAN_MIKTAR, amount);
+        contentValues.put(ALAN_TARIH, date);
+        contentValues.put(ALAN_REGULAR, bool);
+        contentValues.put(ALAN_AY_ID, sel_month_id);
+        database.insert(EXPENSE_TABLO, null, contentValues);
         database.close();
     }
 
-    //delete expense by id
+    //expense'i id ile silme
     public void deleteExpense(long expense_id) {
-        database.delete(TABLE_EXPENSE, FIELD_ID + "=?", new String[]{String.valueOf(expense_id)});
+        database.delete(EXPENSE_TABLO, ALAN_KIMLIK + "=?", new String[]{String.valueOf(expense_id)});
         database.close();
     }
 
-    //returns total expense for specific month
-    public double getTotalExpenseMonthly(int month_id) {
-        double total_expense = 0;
-        Cursor cursor = database.query(TABLE_EXPENSE, new String[]{FIELD_AMOUNT}, FIELD_MONTH_ID + "=?", new String[]{String.valueOf(month_id)}, null, null, null);
+    //belirli ay için toplam expense döndürme
+    public double getTotalExpenseMonthly(int ay_id) {
+        double toplam_expense = 0;
+        Cursor cursor = database.query(EXPENSE_TABLO, new String[]{ALAN_MIKTAR}, ALAN_AY_ID + "=?", new String[]{String.valueOf(ay_id)}, null, null, null);
         if (cursor.getCount() <= 0)
-            return total_expense;
+            return toplam_expense;
 
         cursor.moveToFirst();
 
         do {
-            total_expense = total_expense + cursor.getDouble(cursor.getColumnIndex(FIELD_AMOUNT));
+            toplam_expense = toplam_expense + cursor.getDouble(cursor.getColumnIndex(ALAN_MIKTAR));
         } while (cursor.moveToNext());
 
         cursor.close();
         database.close();
-        return total_expense;
+        return toplam_expense;
     }
 
-    //returns the sum of all expenses
+    //bütün expense'lerin toplamını döndürme
     public double getOverallTotalExpense() {
         double total_expense = 0;
-        Cursor cursor = database.query(TABLE_EXPENSE, new String[]{FIELD_AMOUNT}, null, null, null, null, null);
+        Cursor cursor = database.query(EXPENSE_TABLO, new String[]{ALAN_MIKTAR}, null, null, null, null, null);
         if (cursor.getCount() <= 0)
             return total_expense;
 
         cursor.moveToFirst();
 
         do {
-            total_expense = total_expense + cursor.getDouble(cursor.getColumnIndex(FIELD_AMOUNT));
+            total_expense = total_expense + cursor.getDouble(cursor.getColumnIndex(ALAN_MIKTAR));
         } while (cursor.moveToNext());
 
         cursor.close();
@@ -233,9 +233,9 @@ public class ExpenseDB extends SQLiteOpenHelper {
         return total_expense;
     }
 
-    //check if sheet already exists
+    //sheet halihazırda var mı
     public boolean checkIfSheetExists(String month, String year) {
-        Cursor cursor = database.query(TABLE_SHEETS, null, FIELD_MONTH + "=? AND " + FIELD_YEAR + "=?", new String[]{month, year}, null, null, null);
+        Cursor cursor = database.query(SHEETS_TABLO, null, ALAN_AY + "=? AND " + ALAN_YIL + "=?", new String[]{month, year}, null, null, null);
         if (cursor.getCount() > 0) {
             cursor.close();
             return false;
@@ -245,12 +245,12 @@ public class ExpenseDB extends SQLiteOpenHelper {
         }
     }
 
-    //converts sqlite boolean value from 0/1 to true/false
+    //sqlite boolean değerini 0/1'den true/false'a çevirme
     private boolean getBooleanFormat(int x) {
         return x == 1;
     }
 
-    //returns month name to corresponding month number
+    //ay ismini eşleşen ay numarasına döndürme
     private String getMonthName(String month) {
         String[] months = context.getResources().getStringArray(R.array.aylar);
         return months[Integer.parseInt(month)];
