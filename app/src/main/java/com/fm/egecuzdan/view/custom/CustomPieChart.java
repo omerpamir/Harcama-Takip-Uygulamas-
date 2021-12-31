@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class CustomPieChart extends View {
 
     private Paint paint;
-    private ArrayList<Float> pieValues;
+    private ArrayList<Float> pieDeğerleri;
     private RectF rectF;
     private Context context;
     private final int diameter;
@@ -27,18 +27,18 @@ public class CustomPieChart extends View {
         diameter = 320;
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         rectF = new RectF(0, 0, diameter, diameter);
-        pieValues = new ArrayList();
+        pieDeğerleri = new ArrayList();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (pieValues != null) {
-            //draw regular arc
+        if (pieDeğerleri != null) {
+            //düzenli harcamalar çiziliyor
             paint.setColor(ContextCompat.getColor(getContext(), R.color.colorDüzenli));
-            canvas.drawArc(rectF, 0, pieValues.get(0), true, paint);
-            //draw non-regular arc
+            canvas.drawArc(rectF, 0, pieDeğerleri.get(0), true, paint);
+            //düzensiz harcamalar çiziliyor
             paint.setColor(ContextCompat.getColor(getContext(), R.color.colorDüzensiz));
-            canvas.drawArc(rectF, pieValues.get(0), pieValues.get(1), true, paint);
+            canvas.drawArc(rectF, pieDeğerleri.get(0), pieDeğerleri.get(1), true, paint);
         }
     }
 
@@ -51,18 +51,18 @@ public class CustomPieChart extends View {
 
     public void drawChart(Context context, ArrayList<Float> pieValues) {
         this.context = context;
-        this.pieValues = convertToAngle(pieValues);
+        this.pieDeğerleri = convertToAngle(pieValues);
         invalidate();
     }
 
-    //returns angle values to plot the pie graph
+    //pieChart'ta kullanılacak açı değerleri döndürülür
     private ArrayList<Float> convertToAngle(ArrayList<Float> values) {
         float total = 0;
-        //calculate the total value
+        //total değer hesaplanıyor
         for (int i = 0; i < values.size(); i++) {
             total += values.get(i);
         }
-        //calculate angle for each slice and return in same array
+        //her dilim için açı değeri arraylist içinde döndürülüyor
         for (int i = 0; i < values.size(); i++) {
             values.set(i, ((values.get(i) / total) * 360));
         }

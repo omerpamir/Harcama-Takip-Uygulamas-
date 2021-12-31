@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.fm.egecuzdan.R;
-import com.fm.egecuzdan.db.ExpenseDB;
+import com.fm.egecuzdan.db.GiderDB;
 import com.fm.egecuzdan.db.models.SheetModel;
 import com.fm.egecuzdan.utils.AppConstants;
 
@@ -69,7 +69,7 @@ public class AylıkListeAdapter extends BaseAdapter {
         viewContainer.tv_ay.setText(sheetData.get(position).getAy());
         viewContainer.tv_yıl.setText(sheetData.get(position).getYıl());
         // toplam artan hesaplanıyor
-        double toplam_gider = new ExpenseDB(context).getTotalExpenseMonthly(sheetData.get(position).getId());
+        double toplam_gider = new GiderDB(context).getAylıkGider(sheetData.get(position).getId());
         double gelir = sheetData.get(position).getGelir();
         double artan = gelir - toplam_gider;
         DecimalFormat roundFormat = new DecimalFormat("#.##");

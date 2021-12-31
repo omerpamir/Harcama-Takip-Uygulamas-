@@ -12,7 +12,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.fm.egecuzdan.R;
-import com.fm.egecuzdan.db.ExpenseDB;
+import com.fm.egecuzdan.db.GiderDB;
 import com.fm.egecuzdan.db.models.GiderModel;
 
 import java.util.Calendar;
@@ -93,7 +93,7 @@ public class GiderEkleme extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validate()) {
-                    new ExpenseDB(getApplicationContext()).addExpense(et_amount.getText().toString(), et_remarks.getText().toString(), String.valueOf(datePicker.getDayOfMonth()), rb_regular.isChecked(), sel_month_id);
+                    new GiderDB(getApplicationContext()).giderEkle(et_amount.getText().toString(), et_remarks.getText().toString(), String.valueOf(datePicker.getDayOfMonth()), rb_regular.isChecked(), sel_month_id);
                     Toast.makeText(GiderEkleme.this, "Added", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onClick: save " + rb_regular.isChecked());
                     finish();
@@ -105,7 +105,7 @@ public class GiderEkleme extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validate()) {
-                    new ExpenseDB(getApplicationContext()).updateExpense(et_amount.getText().toString(), et_remarks.getText().toString(), String.valueOf(datePicker.getDayOfMonth()), rb_regular.isChecked(), giderModel.getId());
+                    new GiderDB(getApplicationContext()).updateGider(et_amount.getText().toString(), et_remarks.getText().toString(), String.valueOf(datePicker.getDayOfMonth()), rb_regular.isChecked(), giderModel.getId());
                     Toast.makeText(GiderEkleme.this, "Added", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onClick: upd " + rb_regular.isChecked());
                     finish();

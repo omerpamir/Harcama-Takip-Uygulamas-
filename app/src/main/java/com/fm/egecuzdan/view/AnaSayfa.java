@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.fm.egecuzdan.R;
 import com.fm.egecuzdan.adapters.AylıkListeAdapter;
-import com.fm.egecuzdan.db.ExpenseDB;
+import com.fm.egecuzdan.db.GiderDB;
 import com.fm.egecuzdan.db.models.SheetModel;
 import com.fm.egecuzdan.utils.AppConstants;
 
@@ -74,7 +74,7 @@ public class AnaSayfa extends AppCompatActivity {
 
     //get data from sheets table
     private void fetchSheetsFromDB() {
-        ArrayList<SheetModel> sheetData = new ExpenseDB(this).getSheets();
+        ArrayList<SheetModel> sheetData = new GiderDB(this).getSheets();
         if (sheetData != null) {
             tv_null.setVisibility(View.GONE);
             cv_genel_bilgi.setVisibility(View.VISIBLE);
@@ -85,7 +85,7 @@ public class AnaSayfa extends AppCompatActivity {
                 adapter.updateSheetList(sheetData);
             }
 
-            double total_expense = new ExpenseDB(this).getOverallTotalExpense();
+            double total_expense = new GiderDB(this).getTotalGider();
             double total_income = 0;
             for (int i = 0; i < sheetData.size(); i++) {
                 total_income = total_income + sheetData.get(i).getGelir();
@@ -139,7 +139,7 @@ public class AnaSayfa extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (et_income.getText().toString().length() > 0) {
-                    boolean status = new ExpenseDB(getApplicationContext()).yeniSheetEkle(String.valueOf(spinner_month.getSelectedItemPosition()), spinner_year.getSelectedItem().toString(), Double.parseDouble(et_income.getText().toString()));
+                    boolean status = new GiderDB(getApplicationContext()).yeniSheetEkle(String.valueOf(spinner_month.getSelectedItemPosition()), spinner_year.getSelectedItem().toString(), Double.parseDouble(et_income.getText().toString()));
                     if (status) {
                         Toast.makeText(getApplicationContext(), "Yeni sheet eklendi", Toast.LENGTH_SHORT).show();
                         alertDialog.dismiss();

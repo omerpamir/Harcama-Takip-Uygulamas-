@@ -55,7 +55,7 @@ public class GiderListesiAdapter extends BaseAdapter {
 
             viewContainer.tv_miktar = (TextView) convertView.findViewById(R.id.tv_miktar);
             viewContainer.tv_açıklama = (TextView) convertView.findViewById(R.id.tv_açıklama);
-            viewContainer.tv_düzenliÖdeme = (TextView) convertView.findViewById(R.id.tv_düzenli);
+            viewContainer.tv_düzenli_ödeme = (TextView) convertView.findViewById(R.id.tv_düzenli);
             viewContainer.tv_tarih = (TextView) convertView.findViewById(R.id.tv_tarih);
 
             convertView.setTag(viewContainer);
@@ -63,7 +63,7 @@ public class GiderListesiAdapter extends BaseAdapter {
             viewContainer = (ViewContainer) convertView.getTag();
         }
 
-        viewContainer.tv_düzenliÖdeme.setText(düzenliÖdemedir(giderModelleri.get(position).düzenliÖdemedir()));
+        viewContainer.tv_düzenli_ödeme.setText(düzenli_ödemedir(giderModelleri.get(position).düzenliÖdemedir()));
         viewContainer.tv_miktar.setText(AppConstants.PARA_BİRİMİ + giderModelleri.get(position).getMiktar());
         viewContainer.tv_açıklama.setText(giderModelleri.get(position).getAçıklama());
         viewContainer.tv_tarih.setText(giderModelleri.get(position).getTarih());
@@ -71,7 +71,7 @@ public class GiderListesiAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private String düzenliÖdemedir(boolean b) {
+    private String düzenli_ödemedir(boolean b) {
         if (b)
             return "Düzenli";
         else
@@ -81,7 +81,7 @@ public class GiderListesiAdapter extends BaseAdapter {
     private class ViewContainer {
         private TextView tv_miktar;
         private TextView tv_açıklama;
-        private TextView tv_düzenliÖdeme;
+        private TextView tv_düzenli_ödeme;
         private TextView tv_tarih;
     }
 }

@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.fm.egecuzdan.R;
 import com.fm.egecuzdan.adapters.GiderListesiAdapter;
-import com.fm.egecuzdan.db.ExpenseDB;
+import com.fm.egecuzdan.db.GiderDB;
 import com.fm.egecuzdan.db.models.GiderModel;
 import com.fm.egecuzdan.db.models.SheetModel;
 import com.fm.egecuzdan.utils.AppConstants;
@@ -106,7 +106,7 @@ public class AylıkDetay extends AppCompatActivity {
     }
 
     private void fetchIncomeFromDB() {
-        SheetModel sheetData = new ExpenseDB(getApplicationContext()).getIncomeData(month_id);
+        SheetModel sheetData = new GiderDB(getApplicationContext()).getGelirData(month_id);
         if (sheetData != null) {
             income = sheetData.getGelir();
             sel_month = sheetData.getAy();
@@ -118,7 +118,7 @@ public class AylıkDetay extends AppCompatActivity {
     }
 
     private void fetchExpenseFromDB() {
-        expenseData = new ExpenseDB(getApplicationContext()).getExpenses(month_id);
+        expenseData = new GiderDB(getApplicationContext()).getGiderler(month_id);
         if (expenseData != null) {
             tv_empty_info.setVisibility(View.GONE);
             layout_totals.setVisibility(View.VISIBLE);
@@ -187,7 +187,7 @@ public class AylıkDetay extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (et_income.getText().toString().length() > 0 && !et_income.getText().toString().equalsIgnoreCase("") && !et_income.getText().toString().equalsIgnoreCase(".")) {
-                    new ExpenseDB(getApplicationContext()).editIncome(Double.valueOf(et_income.getText().toString()), month_id);
+                    new GiderDB(getApplicationContext()).editGelir(Double.valueOf(et_income.getText().toString()), month_id);
                     Toast.makeText(AylıkDetay.this, "Updated", Toast.LENGTH_SHORT).show();
                     alertDialog.dismiss();
                     fetchIncomeFromDB();
@@ -227,7 +227,7 @@ public class AylıkDetay extends AppCompatActivity {
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new ExpenseDB(getApplicationContext()).deleteExpense(itemId);
+                new GiderDB(getApplicationContext()).giderSil(itemId);
                 Toast.makeText(AylıkDetay.this, "Deleted", Toast.LENGTH_SHORT).show();
                 alertDialog.dismiss();
 
