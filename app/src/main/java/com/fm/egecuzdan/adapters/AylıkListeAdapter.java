@@ -15,13 +15,13 @@ import com.fm.egecuzdan.utils.AppConstants;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class MonthlyListAdapter extends BaseAdapter {
+public class AylıkListeAdapter extends BaseAdapter {
 
     private ArrayList<SheetModel> sheetData;
     private Context context;
     private LayoutInflater layoutInflater;
 
-    public MonthlyListAdapter(Context context, ArrayList<SheetModel> sheetData) {
+    public AylıkListeAdapter(Context context, ArrayList<SheetModel> sheetData) {
         this.context = context;
         this.sheetData = sheetData;
     }
@@ -55,39 +55,39 @@ public class MonthlyListAdapter extends BaseAdapter {
             layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.row_list_item_tablo, parent, false);
 
-            viewContainer.tv_income = (TextView) convertView.findViewById(R.id.tv_gelir);
-            viewContainer.tv_month = (TextView) convertView.findViewById(R.id.tv_ay);
-            viewContainer.tv_year = (TextView) convertView.findViewById(R.id.tv_yıl);
-            viewContainer.tv_surplus = (TextView) convertView.findViewById(R.id.tv_artan);
+            viewContainer.tv_gelir = (TextView) convertView.findViewById(R.id.tv_gelir);
+            viewContainer.tv_ay = (TextView) convertView.findViewById(R.id.tv_ay);
+            viewContainer.tv_yıl = (TextView) convertView.findViewById(R.id.tv_yıl);
+            viewContainer.tv_artan = (TextView) convertView.findViewById(R.id.tv_artan);
 
             convertView.setTag(viewContainer);
         } else {
             viewContainer = (ViewContainer) convertView.getTag();
         }
 
-        viewContainer.tv_income.setText("Income: " + AppConstants.CURRENCY + sheetData.get(position).getIncome());
-        viewContainer.tv_month.setText(sheetData.get(position).getMonth());
-        viewContainer.tv_year.setText(sheetData.get(position).getYear());
-        //calculate total surplus
-        double total_expense = new ExpenseDB(context).getTotalExpenseMonthly(sheetData.get(position).getId());
-        double income = sheetData.get(position).getIncome();
-        double surplus = income - total_expense;
+        viewContainer.tv_gelir.setText("Gelir: " + AppConstants.PARA_BİRİMİ + sheetData.get(position).getGelir());
+        viewContainer.tv_ay.setText(sheetData.get(position).getAy());
+        viewContainer.tv_yıl.setText(sheetData.get(position).getYıl());
+        // toplam artan hesaplanıyor
+        double toplam_gider = new ExpenseDB(context).getTotalExpenseMonthly(sheetData.get(position).getId());
+        double gelir = sheetData.get(position).getGelir();
+        double artan = gelir - toplam_gider;
         DecimalFormat roundFormat = new DecimalFormat("#.##");
-        if (surplus > 0) {
-            viewContainer.tv_surplus.setText("Surplus: " + AppConstants.CURRENCY + roundFormat.format(surplus));
-            viewContainer.tv_surplus.setTextColor(context.getResources().getColor(R.color.colorSurplus));
+        if (artan > 0) {
+            viewContainer.tv_artan.setText("Artan: " + AppConstants.PARA_BİRİMİ + roundFormat.format(artan));
+            viewContainer.tv_artan.setTextColor(context.getResources().getColor(R.color.colorSurplus));
         } else {
-            viewContainer.tv_surplus.setText("Deficit: " + AppConstants.CURRENCY + roundFormat.format(surplus));
-            viewContainer.tv_surplus.setTextColor(context.getResources().getColor(R.color.colorDeficit));
+            viewContainer.tv_artan.setText("Eksik: " + AppConstants.PARA_BİRİMİ + roundFormat.format(artan));
+            viewContainer.tv_artan.setTextColor(context.getResources().getColor(R.color.colorDeficit));
         }
 
         return convertView;
     }
 
     private class ViewContainer {
-        public TextView tv_surplus;
-        private TextView tv_month;
-        private TextView tv_year;
-        private TextView tv_income;
+        public TextView tv_artan;
+        private TextView tv_ay;
+        private TextView tv_yıl;
+        private TextView tv_gelir;
     }
 }

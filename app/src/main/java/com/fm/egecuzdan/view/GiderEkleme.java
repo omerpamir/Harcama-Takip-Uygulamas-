@@ -13,16 +13,16 @@ import android.widget.Toast;
 
 import com.fm.egecuzdan.R;
 import com.fm.egecuzdan.db.ExpenseDB;
-import com.fm.egecuzdan.db.models.ExpenseModel;
+import com.fm.egecuzdan.db.models.GiderModel;
 
 import java.util.Calendar;
 
 import static com.fm.egecuzdan.utils.AppConstants.INTENT_MODE;
 import static com.fm.egecuzdan.utils.AppConstants.INTENT_MODE_ADD;
-import static com.fm.egecuzdan.utils.AppConstants.SELECTED_EXPENSE;
-import static com.fm.egecuzdan.utils.AppConstants.SELECTED_MONTH;
-import static com.fm.egecuzdan.utils.AppConstants.SELECTED_MONTH_ID;
-import static com.fm.egecuzdan.utils.AppConstants.SELECTED_YEAR;
+import static com.fm.egecuzdan.utils.AppConstants.SEÇİLEN_GİDER;
+import static com.fm.egecuzdan.utils.AppConstants.SEÇİLEN_AY;
+import static com.fm.egecuzdan.utils.AppConstants.SEÇİLEN_AY_ID;
+import static com.fm.egecuzdan.utils.AppConstants.SEÇİLEN_YIL;
 
 public class GiderEkleme extends AppCompatActivity {
 
@@ -34,7 +34,7 @@ public class GiderEkleme extends AppCompatActivity {
     private String sel_month;
     private String sel_year;
     private Button btn_update;
-    private ExpenseModel expenseModel;
+    private GiderModel giderModel;
     private String TAG = "add_exp";
 
     @Override
@@ -51,9 +51,9 @@ public class GiderEkleme extends AppCompatActivity {
         rb_non_regular = (RadioButton) findViewById(R.id.rb_düznsiz);
         btn_update = (Button) findViewById(R.id.btn_güncelle);
 
-        sel_month_id = getIntent().getStringExtra(SELECTED_MONTH_ID);
-        sel_month = getIntent().getStringExtra(SELECTED_MONTH);
-        sel_year = getIntent().getStringExtra(SELECTED_YEAR);
+        sel_month_id = getIntent().getStringExtra(SEÇİLEN_AY_ID);
+        sel_month = getIntent().getStringExtra(SEÇİLEN_AY);
+        sel_year = getIntent().getStringExtra(SEÇİLEN_YIL);
 
         if (getIntent().getIntExtra(INTENT_MODE, INTENT_MODE_ADD) == INTENT_MODE_ADD) {
             setTitle("Add Expense");
@@ -71,11 +71,11 @@ public class GiderEkleme extends AppCompatActivity {
             setTitle("Edit Expense");
             btn_update.setVisibility(View.VISIBLE);
             btn_save.setVisibility(View.GONE);
-            expenseModel = (ExpenseModel) getIntent().getSerializableExtra(SELECTED_EXPENSE);
+            giderModel = (GiderModel) getIntent().getSerializableExtra(SEÇİLEN_GİDER);
 
-            et_amount.setText(expenseModel.getAmount() + "");
-            et_remarks.setText(expenseModel.getRemarks() + "");
-            if (expenseModel.isRegular()) {
+            et_amount.setText(giderModel.getMiktar() + "");
+            et_remarks.setText(giderModel.getAçıklama() + "");
+            if (giderModel.düzenliÖdemedir()) {
                 rb_regular.setChecked(true);
             } else
                 rb_non_regular.setChecked(true);
@@ -85,7 +85,7 @@ public class GiderEkleme extends AppCompatActivity {
             datePicker.setMinDate(c.getTimeInMillis());
             c.set(Integer.parseInt(sel_year), getMonthNumber(sel_month), c.getActualMaximum(Calendar.DAY_OF_MONTH));
             datePicker.setMaxDate(c.getTimeInMillis());
-            datePicker.updateDate(Integer.parseInt(sel_year), getMonthNumber(sel_month), Integer.parseInt(expenseModel.getDate()));
+            datePicker.updateDate(Integer.parseInt(sel_year), getMonthNumber(sel_month), Integer.parseInt(giderModel.getTarih()));
 
         }
 
@@ -105,7 +105,7 @@ public class GiderEkleme extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validate()) {
-                    new ExpenseDB(getApplicationContext()).updateExpense(et_amount.getText().toString(), et_remarks.getText().toString(), String.valueOf(datePicker.getDayOfMonth()), rb_regular.isChecked(), expenseModel.getId());
+                    new ExpenseDB(getApplicationContext()).updateExpense(et_amount.getText().toString(), et_remarks.getText().toString(), String.valueOf(datePicker.getDayOfMonth()), rb_regular.isChecked(), giderModel.getId());
                     Toast.makeText(GiderEkleme.this, "Added", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onClick: upd " + rb_regular.isChecked());
                     finish();

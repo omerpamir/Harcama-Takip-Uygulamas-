@@ -18,9 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fm.egecuzdan.R;
-import com.fm.egecuzdan.adapters.ExpenseListAdapter;
+import com.fm.egecuzdan.adapters.GiderListesiAdapter;
 import com.fm.egecuzdan.db.ExpenseDB;
-import com.fm.egecuzdan.db.models.ExpenseModel;
+import com.fm.egecuzdan.db.models.GiderModel;
 import com.fm.egecuzdan.db.models.SheetModel;
 import com.fm.egecuzdan.utils.AppConstants;
 import com.fm.egecuzdan.view.custom.CustomPieChart;
@@ -31,15 +31,15 @@ import java.util.ArrayList;
 import static com.fm.egecuzdan.utils.AppConstants.INTENT_MODE;
 import static com.fm.egecuzdan.utils.AppConstants.INTENT_MODE_ADD;
 import static com.fm.egecuzdan.utils.AppConstants.INTENT_MODE_EDIT;
-import static com.fm.egecuzdan.utils.AppConstants.SELECTED_EXPENSE;
-import static com.fm.egecuzdan.utils.AppConstants.SELECTED_MONTH;
-import static com.fm.egecuzdan.utils.AppConstants.SELECTED_MONTH_ID;
-import static com.fm.egecuzdan.utils.AppConstants.SELECTED_YEAR;
+import static com.fm.egecuzdan.utils.AppConstants.SEÇİLEN_GİDER;
+import static com.fm.egecuzdan.utils.AppConstants.SEÇİLEN_AY;
+import static com.fm.egecuzdan.utils.AppConstants.SEÇİLEN_AY_ID;
+import static com.fm.egecuzdan.utils.AppConstants.SEÇİLEN_YIL;
 
 public class AylıkDetay extends AppCompatActivity {
 
     private ListView listView_months;
-    private ExpenseListAdapter adapter;
+    private GiderListesiAdapter adapter;
     private TextView tv_income;
     private TextView tv_surplus;
     private TextView tv_month;
@@ -52,7 +52,7 @@ public class AylıkDetay extends AppCompatActivity {
     private String sel_year;
     private RelativeLayout layout_totals;
     private CustomPieChart pieChart;
-    private ArrayList<ExpenseModel> expenseData;
+    private ArrayList<GiderModel> expenseData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,16 +72,16 @@ public class AylıkDetay extends AppCompatActivity {
         layout_totals = (RelativeLayout) findViewById(R.id.layout_toplamlar);
         pieChart = (CustomPieChart) findViewById(R.id.pie_chart);
 
-        month_id = getIntent().getStringExtra(SELECTED_MONTH_ID);
+        month_id = getIntent().getStringExtra(SEÇİLEN_AY_ID);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), GiderEkleme.class)
-                        .putExtra(SELECTED_MONTH_ID, month_id)
-                        .putExtra(SELECTED_MONTH, sel_month)
-                        .putExtra(SELECTED_YEAR, sel_year)
+                        .putExtra(SEÇİLEN_AY_ID, month_id)
+                        .putExtra(SEÇİLEN_AY, sel_month)
+                        .putExtra(SEÇİLEN_YIL, sel_year)
                         .putExtra(INTENT_MODE, INTENT_MODE_ADD));
             }
         });
@@ -108,12 +108,12 @@ public class AylıkDetay extends AppCompatActivity {
     private void fetchIncomeFromDB() {
         SheetModel sheetData = new ExpenseDB(getApplicationContext()).getIncomeData(month_id);
         if (sheetData != null) {
-            income = sheetData.getIncome();
-            sel_month = sheetData.getMonth();
-            sel_year = sheetData.getYear();
-            tv_month.setText(sheetData.getMonth() + " " + sheetData.getYear());
-            tv_income.setText("Income: " + AppConstants.CURRENCY + income);
-            setTitle(sheetData.getMonth() + " " + sheetData.getYear());
+            income = sheetData.getGelir();
+            sel_month = sheetData.getAy();
+            sel_year = sheetData.getYıl();
+            tv_month.setText(sheetData.getAy() + " " + sheetData.getYıl());
+            tv_income.setText("Income: " + AppConstants.PARA_BİRİMİ + income);
+            setTitle(sheetData.getAy() + " " + sheetData.getYıl());
         }
     }
 
@@ -125,34 +125,34 @@ public class AylıkDetay extends AppCompatActivity {
             tv_surplus.setVisibility(View.VISIBLE);
             listView_months.setVisibility(View.VISIBLE);
             if (adapter == null) {
-                adapter = new ExpenseListAdapter(this, expenseData);
+                adapter = new GiderListesiAdapter(this, expenseData);
                 listView_months.setAdapter(adapter);
             } else {
-                adapter.updateExpenseList(expenseData);
+                adapter.updateGiderListesi(expenseData);
             }
             double total_amount = 0;
             double total_regular = 0;
             double total_non_regular = 0;
             for (int i = 0; i < expenseData.size(); i++) {
-                if (!expenseData.get(i).getAmount().equalsIgnoreCase("")) {
-                    total_amount = total_amount + Double.valueOf(expenseData.get(i).getAmount());
-                    if (expenseData.get(i).isRegular())
-                        total_regular = total_regular + Double.valueOf(expenseData.get(i).getAmount());
+                if (!expenseData.get(i).getMiktar().equalsIgnoreCase("")) {
+                    total_amount = total_amount + Double.valueOf(expenseData.get(i).getMiktar());
+                    if (expenseData.get(i).düzenliÖdemedir())
+                        total_regular = total_regular + Double.valueOf(expenseData.get(i).getMiktar());
                     else
-                        total_non_regular = total_non_regular + Double.valueOf(expenseData.get(i).getAmount());
+                        total_non_regular = total_non_regular + Double.valueOf(expenseData.get(i).getMiktar());
                 }
             }
             double surplus = income - total_amount;
             DecimalFormat roundFormat = new DecimalFormat("#.##");
             if (surplus > 0) {
-                tv_surplus.setText("Surplus: " + AppConstants.CURRENCY + roundFormat.format(surplus));
+                tv_surplus.setText("Surplus: " + AppConstants.PARA_BİRİMİ + roundFormat.format(surplus));
                 tv_surplus.setTextColor(getResources().getColor(R.color.colorSurplus));
             } else {
-                tv_surplus.setText("Deficit: " + AppConstants.CURRENCY + roundFormat.format(surplus));
+                tv_surplus.setText("Deficit: " + AppConstants.PARA_BİRİMİ + roundFormat.format(surplus));
                 tv_surplus.setTextColor(getResources().getColor(R.color.colorDeficit));
             }
-            tv_total_regular.setText("Regular: " + AppConstants.CURRENCY + roundFormat.format(total_regular));
-            tv_total_non_regular.setText("Non-Regular: " + AppConstants.CURRENCY + roundFormat.format(total_non_regular));
+            tv_total_regular.setText("Regular: " + AppConstants.PARA_BİRİMİ + roundFormat.format(total_regular));
+            tv_total_non_regular.setText("Non-Regular: " + AppConstants.PARA_BİRİMİ + roundFormat.format(total_non_regular));
             showExpenseStatistics(Float.parseFloat(total_regular + ""), Float.parseFloat(total_non_regular + ""));
         } else {
             tv_surplus.setVisibility(View.GONE);
@@ -215,10 +215,10 @@ public class AylıkDetay extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), GiderEkleme.class)
-                        .putExtra(SELECTED_MONTH_ID, month_id)
-                        .putExtra(SELECTED_MONTH, sel_month)
-                        .putExtra(SELECTED_YEAR, sel_year)
-                        .putExtra(SELECTED_EXPENSE, expenseData.get(position))
+                        .putExtra(SEÇİLEN_AY_ID, month_id)
+                        .putExtra(SEÇİLEN_AY, sel_month)
+                        .putExtra(SEÇİLEN_YIL, sel_year)
+                        .putExtra(SEÇİLEN_GİDER, expenseData.get(position))
                         .putExtra(INTENT_MODE, INTENT_MODE_EDIT));
                 alertDialog.dismiss();
             }

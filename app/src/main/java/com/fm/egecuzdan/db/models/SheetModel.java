@@ -3,9 +3,9 @@ package com.fm.egecuzdan.db.models;
 public class SheetModel {
 
     private int id;
-    private String month;
-    private String year;
-    private double income;
+    private String ay;
+    private String yıl;
+    private double gelir;
 
     public int getId() {
         return id;
@@ -15,27 +15,27 @@ public class SheetModel {
         this.id = id;
     }
 
-    public String getMonth() {
-        return month;
+    public String getAy() {
+        return ay;
     }
 
-    public void setMonth(String month) {
-        this.month = month;
+    public void setAy(String ay) {
+        this.ay = ay;
     }
 
-    public String getYear() {
-        return year;
+    public String getYıl() {
+        return yıl;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setYıl(String yıl) {
+        this.yıl = yıl;
     }
 
-    public double getIncome() {
-        return income;
+    public double getGelir() {
+        return gelir;
     }
 
-    public void setIncome(double income) {
-        this.income = income;
+    public void setGelir(double gelir) {
+        this.gelir = gelir;
     }
 }

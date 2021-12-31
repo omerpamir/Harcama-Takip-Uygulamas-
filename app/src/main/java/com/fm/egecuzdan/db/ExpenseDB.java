@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.fm.egecuzdan.R;
-import com.fm.egecuzdan.db.models.ExpenseModel;
+import com.fm.egecuzdan.db.models.GiderModel;
 import com.fm.egecuzdan.db.models.SheetModel;
 
 import java.util.ArrayList;
@@ -91,8 +91,8 @@ public class ExpenseDB extends SQLiteOpenHelper {
     }
 
     //returns the list of all expenses from the expense table
-    public ArrayList<ExpenseModel> getExpenses(String month_id) {
-        ArrayList<ExpenseModel> expenseModelList = new ArrayList<>();
+    public ArrayList<GiderModel> getExpenses(String month_id) {
+        ArrayList<GiderModel> giderModelList = new ArrayList<>();
         Cursor cursor = database.query(TABLE_EXPENSE, null, FIELD_MONTH_ID + "=?", new String[]{month_id}, null, null, FIELD_DATE);
         if (cursor.getCount() <= 0)
             return null;
@@ -100,18 +100,18 @@ public class ExpenseDB extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         do {
-            ExpenseModel expenseMode = new ExpenseModel();
+            GiderModel expenseMode = new GiderModel();
             expenseMode.setId(cursor.getInt(cursor.getColumnIndex(FIELD_ID)));
-            expenseMode.setRemarks(cursor.getString(cursor.getColumnIndex(FIELD__REMARKS)));
-            expenseMode.setAmount(cursor.getString(cursor.getColumnIndex(FIELD_AMOUNT)));
-            expenseMode.setDate(cursor.getString(cursor.getColumnIndex(FIELD_DATE)));
-            expenseMode.setRegular(getBooleanFormat(cursor.getInt(cursor.getColumnIndex(FIELD_IS_REGULAR))));
-            expenseModelList.add(expenseMode);
+            expenseMode.setAçıklama(cursor.getString(cursor.getColumnIndex(FIELD__REMARKS)));
+            expenseMode.setMiktar(cursor.getString(cursor.getColumnIndex(FIELD_AMOUNT)));
+            expenseMode.setTarih(cursor.getString(cursor.getColumnIndex(FIELD_DATE)));
+            expenseMode.setDüzenliÖdemedir(getBooleanFormat(cursor.getInt(cursor.getColumnIndex(FIELD_IS_REGULAR))));
+            giderModelList.add(expenseMode);
         } while (cursor.moveToNext());
 
         cursor.close();
         database.close();
-        return expenseModelList;
+        return giderModelList;
     }
 
     //returns the sheet data for a specific month
@@ -125,9 +125,9 @@ public class ExpenseDB extends SQLiteOpenHelper {
 
         do {
             sheetModel.setId(cursor.getInt(cursor.getColumnIndex(FIELD_MONTH_ID)));
-            sheetModel.setIncome(cursor.getDouble(cursor.getColumnIndex(FIELD_INCOME)));
-            sheetModel.setMonth(getMonthName(cursor.getString(cursor.getColumnIndex(FIELD_MONTH))));
-            sheetModel.setYear(cursor.getString(cursor.getColumnIndex(FIELD_YEAR)));
+            sheetModel.setGelir(cursor.getDouble(cursor.getColumnIndex(FIELD_INCOME)));
+            sheetModel.setAy(getMonthName(cursor.getString(cursor.getColumnIndex(FIELD_MONTH))));
+            sheetModel.setYıl(cursor.getString(cursor.getColumnIndex(FIELD_YEAR)));
         } while (cursor.moveToNext());
 
         cursor.close();
@@ -168,9 +168,9 @@ public class ExpenseDB extends SQLiteOpenHelper {
         do {
             SheetModel sheetModel = new SheetModel();
             sheetModel.setId(cursor.getInt(cursor.getColumnIndex(FIELD_MONTH_ID)));
-            sheetModel.setIncome(cursor.getDouble(cursor.getColumnIndex(FIELD_INCOME)));
-            sheetModel.setMonth(getMonthName(cursor.getString(cursor.getColumnIndex(FIELD_MONTH))));
-            sheetModel.setYear(cursor.getString(cursor.getColumnIndex(FIELD_YEAR)));
+            sheetModel.setGelir(cursor.getDouble(cursor.getColumnIndex(FIELD_INCOME)));
+            sheetModel.setAy(getMonthName(cursor.getString(cursor.getColumnIndex(FIELD_MONTH))));
+            sheetModel.setYıl(cursor.getString(cursor.getColumnIndex(FIELD_YEAR)));
             sheetModelList.add(sheetModel);
         } while (cursor.moveToNext());
 
