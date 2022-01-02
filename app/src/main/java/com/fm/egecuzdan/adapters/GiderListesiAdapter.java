@@ -78,7 +78,7 @@ public class GiderListesiAdapter extends BaseAdapter {
             return "Düzensiz";
     }
 
-    private class ViewContainer {
+    private static class ViewContainer {
         private TextView tv_miktar;
         private TextView tv_açıklama;
         private TextView tv_düzenli_ödeme;

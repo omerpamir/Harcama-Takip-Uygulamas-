@@ -84,7 +84,7 @@ public class AylıkListeAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private class ViewContainer {
+    private static class ViewContainer {
         public TextView tv_artan;
         private TextView tv_ay;
         private TextView tv_yıl;

@@ -56,7 +56,7 @@ public class GiderEkleme extends AppCompatActivity {
         sel_year = getIntent().getStringExtra(SEÇİLEN_YIL);
 
         if (getIntent().getIntExtra(INTENT_MODE, INTENT_MODE_ADD) == INTENT_MODE_ADD) {
-            setTitle("Add Expense");
+            setTitle("Gider Ekle");
             btn_update.setVisibility(View.GONE);
             btn_save.setVisibility(View.VISIBLE);
             Calendar c = Calendar.getInstance();
@@ -68,7 +68,7 @@ public class GiderEkleme extends AppCompatActivity {
             datePicker.updateDate(Integer.parseInt(sel_year), getMonthNumber(sel_month), today_day);
             Log.d(TAG, "onCreate: " + today_day);
         } else {
-            setTitle("Edit Expense");
+            setTitle("Gider Düzenle");
             btn_update.setVisibility(View.VISIBLE);
             btn_save.setVisibility(View.GONE);
             giderModel = (GiderModel) getIntent().getSerializableExtra(SEÇİLEN_GİDER);
@@ -94,7 +94,7 @@ public class GiderEkleme extends AppCompatActivity {
             public void onClick(View v) {
                 if (validate()) {
                     new GiderDB(getApplicationContext()).giderEkle(et_amount.getText().toString(), et_remarks.getText().toString(), String.valueOf(datePicker.getDayOfMonth()), rb_regular.isChecked(), sel_month_id);
-                    Toast.makeText(GiderEkleme.this, "Added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GiderEkleme.this, "Eklendi", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onClick: save " + rb_regular.isChecked());
                     finish();
                 }
@@ -106,7 +106,7 @@ public class GiderEkleme extends AppCompatActivity {
             public void onClick(View v) {
                 if (validate()) {
                     new GiderDB(getApplicationContext()).updateGider(et_amount.getText().toString(), et_remarks.getText().toString(), String.valueOf(datePicker.getDayOfMonth()), rb_regular.isChecked(), giderModel.getId());
-                    Toast.makeText(GiderEkleme.this, "Added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GiderEkleme.this, "Eklendi", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onClick: upd " + rb_regular.isChecked());
                     finish();
                 }
@@ -127,11 +127,11 @@ public class GiderEkleme extends AppCompatActivity {
 
     private boolean validate() {
         if (et_amount.getText().toString().trim().equalsIgnoreCase("")) {
-            Toast.makeText(this, "Enter an amount", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Değer giriniz", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (et_amount.getText().toString().length() < 0) {
-            Toast.makeText(this, "Enter an amount", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Değer giriniz", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

@@ -18,21 +18,21 @@ public class GiderDB extends SQLiteOpenHelper {
     private static int DB_VERSIYON = 1;
 
     //expense tablosu için
-    private static final String GİDER_TABLO = "expense";
-    private static final String ALAN_ID = "id_expense";
-    private static final String ALAN_AÇIKLAMA = "remarks";
-    private static final String ALAN_MIKTAR = "amount";
-    private static final String ALAN_TARIH = "date";
+    private static final String GİDER_TABLO = "gider";
+    private static final String ALAN_ID = "id_gider";
+    private static final String ALAN_AÇIKLAMA = "açıklamalar";
+    private static final String ALAN_MIKTAR = "miktar";
+    private static final String ALAN_TARIH = "tarih";
     private static final String ALAN_DÜZENLİ_ÖDEMEDİR = "is_regular";
 
     //foreign key sheet tablosunun ay id'sini referans ediyor
-    private static final String ALAN_AY_ID = "id_month";
+    private static final String ALAN_AY_ID = "id_ay";
 
     //sheets tablosu için
-    private static final String SHEETS_TABLO = "sheets";
-    private static final String ALAN_AY = "month";
-    private static final String ALAN_YIL = "year";
-    private static final String ALAN_GELIR = "income";
+    private static final String SHEETS_TABLO = "tablolar";
+    private static final String ALAN_AY = "ay";
+    private static final String ALAN_YIL = "yıl";
+    private static final String ALAN_GELIR = "gelir";
 
     private Context context;
     private SQLiteDatabase database;

@@ -112,7 +112,7 @@ public class AylıkDetay extends AppCompatActivity {
             sel_month = sheetData.getAy();
             sel_year = sheetData.getYıl();
             tv_month.setText(sheetData.getAy() + " " + sheetData.getYıl());
-            tv_income.setText("Income: " + AppConstants.PARA_BİRİMİ + income);
+            tv_income.setText("Gelir: " + AppConstants.PARA_BİRİMİ + income);
             setTitle(sheetData.getAy() + " " + sheetData.getYıl());
         }
     }
@@ -145,14 +145,14 @@ public class AylıkDetay extends AppCompatActivity {
             double surplus = income - total_amount;
             DecimalFormat roundFormat = new DecimalFormat("#.##");
             if (surplus > 0) {
-                tv_surplus.setText("Surplus: " + AppConstants.PARA_BİRİMİ + roundFormat.format(surplus));
+                tv_surplus.setText("Artan: " + AppConstants.PARA_BİRİMİ + roundFormat.format(surplus));
                 tv_surplus.setTextColor(getResources().getColor(R.color.colorSurplus));
             } else {
-                tv_surplus.setText("Deficit: " + AppConstants.PARA_BİRİMİ + roundFormat.format(surplus));
+                tv_surplus.setText("Eksik: " + AppConstants.PARA_BİRİMİ + roundFormat.format(surplus));
                 tv_surplus.setTextColor(getResources().getColor(R.color.colorDeficit));
             }
-            tv_total_regular.setText("Regular: " + AppConstants.PARA_BİRİMİ + roundFormat.format(total_regular));
-            tv_total_non_regular.setText("Non-Regular: " + AppConstants.PARA_BİRİMİ + roundFormat.format(total_non_regular));
+            tv_total_regular.setText("Düzenli: " + AppConstants.PARA_BİRİMİ + roundFormat.format(total_regular));
+            tv_total_non_regular.setText("Düzensiz: " + AppConstants.PARA_BİRİMİ + roundFormat.format(total_non_regular));
             showExpenseStatistics(Float.parseFloat(total_regular + ""), Float.parseFloat(total_non_regular + ""));
         } else {
             tv_surplus.setVisibility(View.GONE);
@@ -174,7 +174,7 @@ public class AylıkDetay extends AppCompatActivity {
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_edit_income, null);
         dialogBuilder.setView(dialogView);
-        dialogBuilder.setTitle("Edit Income");
+        dialogBuilder.setTitle("Gelir Düzenle");
 
         final EditText et_income = (EditText) dialogView.findViewById(R.id.et_gelir);
         et_income.setText(income + "");
@@ -188,12 +188,12 @@ public class AylıkDetay extends AppCompatActivity {
             public void onClick(View view) {
                 if (et_income.getText().toString().length() > 0 && !et_income.getText().toString().equalsIgnoreCase("") && !et_income.getText().toString().equalsIgnoreCase(".")) {
                     new GiderDB(getApplicationContext()).editGelir(Double.valueOf(et_income.getText().toString()), month_id);
-                    Toast.makeText(AylıkDetay.this, "Updated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AylıkDetay.this, "Güncellendi", Toast.LENGTH_SHORT).show();
                     alertDialog.dismiss();
                     fetchIncomeFromDB();
                     fetchExpenseFromDB();
                 } else
-                    Toast.makeText(AylıkDetay.this, "Please enter the income", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AylıkDetay.this, "Lütfen geliri giriniz", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -228,7 +228,7 @@ public class AylıkDetay extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new GiderDB(getApplicationContext()).giderSil(itemId);
-                Toast.makeText(AylıkDetay.this, "Deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AylıkDetay.this, "Silindi", Toast.LENGTH_SHORT).show();
                 alertDialog.dismiss();
 
 //                fetchIncomeFromDB();

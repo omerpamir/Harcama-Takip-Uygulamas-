@@ -35,9 +35,9 @@ public class AnaSayfa extends AppCompatActivity {
     private ListView listView_yıllık;
     private AylıkListeAdapter adapter;
     private TextView tv_null;
-    private TextView tv_ort_artan;
+    private TextView tv_kalan_deger;
     private CardView cv_genel_bilgi;
-    private TextView tv_ort_gelir;
+    private TextView tv_toplam_gelir;
     private TextView tv_genel_kalan;
 
     @Override
@@ -49,8 +49,8 @@ public class AnaSayfa extends AppCompatActivity {
 
         listView_yıllık = (ListView) findViewById(R.id.listview_yıllık);
         tv_null = (TextView) findViewById(R.id.tv_null);
-        tv_ort_artan = (TextView) findViewById(R.id.tv_kalan_deger);
-        tv_ort_gelir = (TextView) findViewById(R.id.tv_toplam_gelir);
+        tv_kalan_deger = (TextView) findViewById(R.id.tv_kalan_deger);
+        tv_toplam_gelir = (TextView) findViewById(R.id.tv_toplam_gelir);
         tv_genel_kalan = (TextView) findViewById(R.id.tv_genel_kalan);
         cv_genel_bilgi = (CardView) findViewById(R.id.cv_genel_bilgi);
 
@@ -92,17 +92,17 @@ public class AnaSayfa extends AppCompatActivity {
             }
             double total_surplus = total_income - total_expense;
             DecimalFormat roundFormat = new DecimalFormat("#.##");
-            tv_ort_artan.setText(AppConstants.PARA_BİRİMİ + roundFormat.format(total_surplus));
+            tv_kalan_deger.setText(AppConstants.PARA_BİRİMİ + roundFormat.format(total_surplus));
             if (total_surplus > 0) {
                 tv_genel_kalan.setText("Toplam Artan");
                 tv_genel_kalan.setTextColor(getResources().getColor(R.color.colorSurplus));
-                tv_ort_artan.setTextColor(getResources().getColor(R.color.colorSurplus));
+                tv_kalan_deger.setTextColor(getResources().getColor(R.color.colorSurplus));
             } else {
                 tv_genel_kalan.setText("Toplam Eksik");
                 tv_genel_kalan.setTextColor(getResources().getColor(R.color.colorDeficit));
-                tv_ort_artan.setTextColor(getResources().getColor(R.color.colorDeficit));
+                tv_kalan_deger.setTextColor(getResources().getColor(R.color.colorDeficit));
             }
-            tv_ort_gelir.setText("Toplam Gelir: " + AppConstants.PARA_BİRİMİ + roundFormat.format(total_income));
+            tv_toplam_gelir.setText("Toplam Gelir: " + AppConstants.PARA_BİRİMİ + roundFormat.format(total_income));
         } else {
             tv_null.setVisibility(View.VISIBLE);
             cv_genel_bilgi.setVisibility(View.GONE);
